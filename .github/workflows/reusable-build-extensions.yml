@@ -101,6 +101,7 @@ jobs:
     secrets: inherit
 
   build_on_manylinux:
+    if: false
     needs: prepare
     strategy:
       fail-fast: false
@@ -126,6 +127,7 @@ jobs:
     secrets: inherit
 
   build_on_legacy_manylinux:
+    if: false
     needs: prepare
     strategy:
       fail-fast: false
