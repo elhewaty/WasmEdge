@@ -29,7 +29,6 @@ env:
 
 jobs:
   build:
-    if: ${{ startsWith(inputs.asset_tag, 'manylinux2014') }}
     strategy:
       fail-fast: false
       matrix:

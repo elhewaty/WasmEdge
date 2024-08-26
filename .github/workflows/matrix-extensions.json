@@ -10,7 +10,8 @@
                 "manylinux2014_x86_64",
                 "manylinux2014_aarch64",
                 "manylinux_2_28_x86_64",
-                "manylinux_2_28_aarch64"
+                "manylinux_2_28_aarch64",
+                "ubuntu2004_x86_64"
             ]
         },
         {
@@ -95,7 +96,8 @@
                 "manylinux2014_x86_64",
                 "manylinux2014_aarch64",
                 "manylinux_2_28_x86_64",
-                "manylinux_2_28_aarch64"
+                "manylinux_2_28_aarch64",
+                "ubuntu2004_x86_64"
             ]
         },
         {
@@ -108,7 +110,8 @@
                 "manylinux2014_x86_64",
                 "manylinux2014_aarch64",
                 "manylinux_2_28_x86_64",
-                "manylinux_2_28_aarch64"
+                "manylinux_2_28_aarch64",
+                "ubuntu2004_x86_64"
             ]
         },
         {
@@ -121,7 +124,8 @@
                 "manylinux2014_x86_64",
                 "manylinux2014_aarch64",
                 "manylinux_2_28_x86_64",
-                "manylinux_2_28_aarch64"
+                "manylinux_2_28_aarch64",
+                "ubuntu2004_x86_64"
             ]
         },
         {
@@ -134,7 +138,8 @@
                 "manylinux2014_x86_64",
                 "manylinux2014_aarch64",
                 "manylinux_2_28_x86_64",
-                "manylinux_2_28_aarch64"
+                "manylinux_2_28_aarch64",
+                "ubuntu2004_x86_64"
             ]
         },
         {
@@ -147,7 +152,8 @@
                 "manylinux2014_x86_64",
                 "manylinux2014_aarch64",
                 "manylinux_2_28_x86_64",
-                "manylinux_2_28_aarch64"
+                "manylinux_2_28_aarch64",
+                "ubuntu2004_x86_64"
             ]
         },
         {
@@ -160,7 +166,8 @@
                 "manylinux2014_x86_64",
                 "manylinux2014_aarch64",
                 "manylinux_2_28_x86_64",
-                "manylinux_2_28_aarch64"
+                "manylinux_2_28_aarch64",
+                "ubuntu2004_x86_64"
             ]
         },
         {
@@ -173,7 +180,8 @@
                 "manylinux2014_x86_64",
                 "manylinux2014_aarch64",
                 "manylinux_2_28_x86_64",
-                "manylinux_2_28_aarch64"
+                "manylinux_2_28_aarch64",
+                "ubuntu2004_x86_64"
             ]
         },
         {
@@ -186,7 +194,8 @@
                 "manylinux2014_x86_64",
                 "manylinux2014_aarch64",
                 "manylinux_2_28_x86_64",
-                "manylinux_2_28_aarch64"
+                "manylinux_2_28_aarch64",
+                "ubuntu2004_x86_64"
             ]
         },
         {
@@ -197,7 +206,8 @@
             "options": "-DWASMEDGE_PLUGIN_ZLIB=ON",
             "platforms": [
                 "manylinux_2_28_x86_64",
-                "manylinux_2_28_aarch64"
+                "manylinux_2_28_aarch64",
+                "ubuntu2004_x86_64"
             ]
         }
     ]
