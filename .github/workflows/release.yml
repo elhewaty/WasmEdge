@@ -290,15 +290,22 @@ jobs:
           mv plugin_wasi_nn_burnrs-whisper.tar.gz WasmEdge-plugin-wasi_nn_burnrs-whisper-${{ needs.create_release.outputs.version }}-ubuntu20.04_x86_64.tar.gz
           gh release upload ${{ needs.create_release.outputs.version }} WasmEdge-plugin-wasi_nn_burnrs-whisper-${{ needs.create_release.outputs.version }}-ubuntu20.04_x86_64.tar.gz --clobber
 
+  #
+  # DEPRECATION NOTICE
+  # ------------------
+  # Please avoid adding more plugins in this job.
+  #
+  # Add new plugins to `.github/workflows/matrix-extensions.json`, and
+  # update dependencies in `utils/docker/Dockerfile.ubuntu-plugins-deps`
+  #
   build_and_upload_plugin_ubuntu:
     name: Build and upload plugins on Ubuntu 20.04
     runs-on: ubuntu-latest
     env:
       output_prefix: build/plugins
-      build_options: -DWASMEDGE_PLUGIN_WASI_CRYPTO=ON -DWASMEDGE_PLUGIN_PROCESS=ON -DWASMEDGE_PLUGIN_TENSORFLOW=ON -DWASMEDGE_PLUGIN_TENSORFLOWLITE=ON -DWASMEDGE_PLUGIN_IMAGE=ON -DWASMEDGE_PLUGIN_WASM_BPF=ON -DWASMEDGE_PLUGIN_OPENCVMINI=ON -DWASMEDGE_PLUGIN_ZLIB=ON -DWASMEDGE_PLUGIN_FFMPEG=ON -DWASMEDGE_PLUGIN_STABLEDIFFUSION=ON
-      tar_names: wasi_crypto wasmedge_process wasmedge_tensorflow wasmedge_tensorflowlite wasmedge_image wasm_bpf wasmedge_opencvmini wasmedge_zlib wasmedge_ffmpeg wasmedge_stablediffusion
-      output_bins: libwasmedgePluginWasiCrypto.so libwasmedgePluginWasmEdgeProcess.so libwasmedgePluginWasmEdgeTensorflow.so libwasmedgePluginWasmEdgeTensorflowLite.so libwasmedgePluginWasmEdgeImage.so libwasmedgePluginWasmBpf.so libwasmedgePluginWasmEdgeOpenCVMini.so libwasmedgePluginWasmEdgeZlib.so libwasmedgePluginWasmEdgeFFmpeg.so libwasmedgePluginWasmEdgeStableDiffusion.so
-      OPENCV_VERSION: "4.8.0"
+      build_options: -DWASMEDGE_PLUGIN_WASM_BPF=ON
+      tar_names: wasm_bpf
+      output_bins: libwasmedgePluginWasmBpf.so
     needs: create_release
     container:
       image: wasmedge/wasmedge:ubuntu-20.04-build-clang
@@ -313,12 +320,11 @@ jobs:
       - name: Install dependencies
         run: |
           apt update
-          apt install -y libssl-dev cmake g++ wget unzip
+          apt install -y libssl-dev g++
           apt install -y libelf-dev zlib1g-dev pkg-config
           apt install -y cargo
           apt install -y yasm
           bash utils/ffmpeg/install-ffmpeg-v6.0.sh
-          bash utils/opencvmini/install-opencvmini.sh
       - name: Build plugins
         shell: bash
         run: |
@@ -353,66 +359,12 @@ jobs:
           && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
           && apt update \
           && apt install gh -y
-      - name: Upload wasi_crypto plugin tar.gz package
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          mv plugin_wasi_crypto.tar.gz WasmEdge-plugin-wasi_crypto-${{ needs.create_release.outputs.version }}-ubuntu20.04_x86_64.tar.gz
-          gh release upload ${{ needs.create_release.outputs.version }} WasmEdge-plugin-wasi_crypto-${{ needs.create_release.outputs.version }}-ubuntu20.04_x86_64.tar.gz --clobber
-      - name: Upload wasmedge_process plugin tar.gz package
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          mv plugin_wasmedge_process.tar.gz WasmEdge-plugin-wasmedge_process-${{ needs.create_release.outputs.version }}-ubuntu20.04_x86_64.tar.gz
-          gh release upload ${{ needs.create_release.outputs.version }} WasmEdge-plugin-wasmedge_process-${{ needs.create_release.outputs.version }}-ubuntu20.04_x86_64.tar.gz --clobber
-      - name: Upload wasmedge_tensorflow plugin tar.gz package
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          mv plugin_wasmedge_tensorflow.tar.gz WasmEdge-plugin-wasmedge_tensorflow-${{ needs.create_release.outputs.version }}-ubuntu20.04_x86_64.tar.gz
-          gh release upload ${{ needs.create_release.outputs.version }} WasmEdge-plugin-wasmedge_tensorflow-${{ needs.create_release.outputs.version }}-ubuntu20.04_x86_64.tar.gz --clobber
-      - name: Upload wasmedge_tensorflowlite plugin tar.gz package
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          mv plugin_wasmedge_tensorflowlite.tar.gz WasmEdge-plugin-wasmedge_tensorflowlite-${{ needs.create_release.outputs.version }}-ubuntu20.04_x86_64.tar.gz
-          gh release upload ${{ needs.create_release.outputs.version }} WasmEdge-plugin-wasmedge_tensorflowlite-${{ needs.create_release.outputs.version }}-ubuntu20.04_x86_64.tar.gz --clobber
-      - name: Upload wasmedge_image plugin tar.gz package
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          mv plugin_wasmedge_image.tar.gz WasmEdge-plugin-wasmedge_image-${{ needs.create_release.outputs.version }}-ubuntu20.04_x86_64.tar.gz
-          gh release upload ${{ needs.create_release.outputs.version }} WasmEdge-plugin-wasmedge_image-${{ needs.create_release.outputs.version }}-ubuntu20.04_x86_64.tar.gz --clobber
       - name: Upload wasm_bpf plugin tar.gz package
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           mv plugin_wasm_bpf.tar.gz WasmEdge-plugin-wasm_bpf-${{ needs.create_release.outputs.version }}-ubuntu20.04_x86_64.tar.gz
           gh release upload ${{ needs.create_release.outputs.version }} WasmEdge-plugin-wasm_bpf-${{ needs.create_release.outputs.version }}-ubuntu20.04_x86_64.tar.gz --clobber
-      - name: Upload wasmedge_opencvmini plugin tar.gz package
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          mv plugin_wasmedge_opencvmini.tar.gz WasmEdge-plugin-wasmedge_opencvmini-${{ needs.create_release.outputs.version }}-ubuntu20.04_x86_64.tar.gz
-          gh release upload ${{ needs.create_release.outputs.version }} WasmEdge-plugin-wasmedge_opencvmini-${{ needs.create_release.outputs.version }}-ubuntu20.04_x86_64.tar.gz --clobber
-      - name: Upload wasmedge_zlib plugin tar.gz package
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          mv plugin_wasmedge_zlib.tar.gz WasmEdge-plugin-wasmedge_zlib-${{ needs.create_release.outputs.version }}-ubuntu20.04_x86_64.tar.gz
-          gh release upload ${{ needs.create_release.outputs.version }} WasmEdge-plugin-wasmedge_zlib-${{ needs.create_release.outputs.version }}-ubuntu20.04_x86_64.tar.gz --clobber
-      - name: Upload wasmedge_ffmpeg plugin tar.gz package
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          mv plugin_wasmedge_ffmpeg.tar.gz WasmEdge-plugin-wasmedge_ffmpeg-${{ needs.create_release.outputs.version }}-ubuntu20.04_x86_64.tar.gz
-          gh release upload ${{ needs.create_release.outputs.version }} WasmEdge-plugin-wasmedge_ffmpeg-${{ needs.create_release.outputs.version }}-ubuntu20.04_x86_64.tar.gz --clobber
-      - name: Upload wasmedge_stablediffusion plugin tar.gz package
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          mv plugin_wasmedge_stablediffusion.tar.gz WasmEdge-plugin-wasmedge_stablediffusion-${{ needs.create_release.outputs.version }}-ubuntu20.04_x86_64.tar.gz
-          gh release upload ${{ needs.create_release.outputs.version }} WasmEdge-plugin-wasmedge_stablediffusion-${{ needs.create_release.outputs.version }}-ubuntu20.04_x86_64.tar.gz --clobber
 
   build_and_upload_plugin_ubuntu_cuda:
     strategy:
@@ -495,8 +447,8 @@ jobs:
           mv plugin_wasmedge_stablediffusion.tar.gz WasmEdge-plugin-wasmedge_stablediffusion-cuda-${{ matrix.cuda_version }}-${{ needs.create_release.outputs.version }}-ubuntu20.04_x86_64.tar.gz
           gh release upload ${{ needs.create_release.outputs.version }} WasmEdge-plugin-wasmedge_stablediffusion-cuda-${{ matrix.cuda_version }}-${{ needs.create_release.outputs.version }}-ubuntu20.04_x86_64.tar.gz --clobber
 
-  build_and_upload_plugins_manylinux:
-    name: Build and upload plugins on manylinux
+  build_and_upload_plugins:
+    name: Build and upload plugins
     needs: create_release
     uses: ./.github/workflows/reusable-build-extensions.yml
     with:
