@@ -51,6 +51,7 @@ target "plugins" {
   tags       = ["wasmedge/wasmedge:${tag(toolchain, ubuntu)}-plugins-deps"]
   args       = {
     BASE_IMAGE = "wasmedge/wasmedge:${tag(toolchain, ubuntu)}"
+    UBUNTU_VER = replace(ubuntu, ".04", "")
   }
 }
 

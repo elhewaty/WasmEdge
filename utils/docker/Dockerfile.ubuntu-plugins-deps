@@ -1,4 +1,5 @@
 ARG BASE_IMAGE=wasmedge/wasmedge:latest
+ARG UBUNTU_VER=22
 FROM ${BASE_IMAGE} AS base
 
 WORKDIR /root
@@ -21,5 +22,22 @@ COPY ffmpeg/install-ffmpeg-v6.0.sh .
 RUN [ "/bin/bash", "install-ffmpeg-v6.0.sh" ]
 ENV PKG_CONFIG_PATH=/root/FFmpeg-n6.0/output/lib/pkgconfig${PKG_CONFIG_PATH:+:${PKG_CONFIG_PATH}}
 ENV LD_LIBRARY_PATH=/root/FFmpeg-n6.0/output/lib${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+
+### deps for ubuntu 20.04 ###
+FROM base AS deps-20
+
+RUN apt-get install -y clang-12 && \
+    update-alternatives --install /usr/bin/clang clang /usr/bin/clang-12 100 && \
+    update-alternatives --install /usr/bin/llvm-strip llvm-strip /usr/bin/llvm-strip-12 100
+
+### deps for ubuntu 22.04 ###
+FROM base AS deps-22
+
+RUN apt-get install -y clang-15 && \
+    update-alternatives --install /usr/bin/clang clang /usr/bin/clang-15 100 && \
+    update-alternatives --install /usr/bin/llvm-strip llvm-strip /usr/bin/llvm-strip-15 100
+
+### deps for all ###
+FROM deps-${UBUNTU_VER} AS final
 
 RUN rm -rf /var/lib/apt/lists/*
