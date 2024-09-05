@@ -357,11 +357,11 @@ jobs:
         include:
           - name: Plugins_g++
             compiler: g++
-            docker_tag: ubuntu-build-gcc-plugins-deps
+            docker_tag: ubuntu-20.04-build-gcc-plugins-deps
             build_type: Release
           - name: Plugins_clang++
             compiler: clang++
-            docker_tag: ubuntu-build-clang-plugins-deps
+            docker_tag: ubuntu-20.04-build-clang-plugins-deps
             build_type: Release
     name: Plugins (Ubuntu, ${{ matrix.compiler }}, ${{ matrix.build_type }})
     runs-on: ubuntu-latest
@@ -387,7 +387,7 @@ jobs:
           apt update
           apt install -y libssl-dev
           apt install -y libelf-dev zlib1g-dev pkg-config libomp-dev
-          apt install -y clang-15
+          apt install -y clang-12
           apt install -y cargo
           apt install -y yasm
           # Running tests of wasm_bpf requires proper ebpf running environment
@@ -396,8 +396,8 @@ jobs:
       - name: Build plugins using ${{ matrix.compiler }} with ${{ matrix.build_type }} mode
         shell: bash
         run: |
-          update-alternatives --install /usr/bin/clang clang /usr/bin/clang-15 100
-          update-alternatives --install /usr/bin/llvm-strip llvm-strip /usr/bin/llvm-strip-15 100
+          update-alternatives --install /usr/bin/clang clang /usr/bin/clang-12 100
+          update-alternatives --install /usr/bin/llvm-strip llvm-strip /usr/bin/llvm-strip-12 100
           testbin_array=(${test_bins})
           export PKG_CONFIG_PATH=$(pwd)/FFmpeg-n6.0/output/lib/pkgconfig
           cmake -Bbuild -GNinja -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} -DWASMEDGE_BUILD_TESTS=ON -DWASMEDGE_USE_LLVM=OFF -DWASMEDGE_BUILD_TOOLS=OFF ${build_options}
