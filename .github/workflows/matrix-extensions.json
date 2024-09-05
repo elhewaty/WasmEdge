@@ -83,7 +83,8 @@
             "options": "-DWASMEDGE_PLUGIN_WASM_BPF=ON -DWASMEDGE_PLUGIN_WASM_BPF_BUILD_LIBBPF_WITH_PKG_CONF=OFF",
             "platforms": [
                 "manylinux2014_x86_64",
-                "manylinux_2_28_x86_64"
+                "manylinux_2_28_x86_64",
+                "ubuntu2004_x86_64"
             ]
         },
         {
