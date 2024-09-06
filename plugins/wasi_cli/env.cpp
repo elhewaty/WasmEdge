@@ -14,6 +14,11 @@ Runtime::Instance::ComponentInstance *createEnvironment(
   return new WasiCliEnvironmentModule();
 }
 
+Runtime::Instance::ComponentInstance *
+createExit(const Plugin::PluginComponent::ComponentDescriptor *) noexcept {
+  return new WasiCliExitModule();
+}
+
 Plugin::Plugin::PluginDescriptor Descriptor{
     .Name = "wasi_cli",
     .Description = "",
@@ -21,13 +26,18 @@ Plugin::Plugin::PluginDescriptor Descriptor{
     .Version = {0, 1, 0, 0},
     .ModuleCount = 0,
     .ModuleDescriptions = {},
-    .ComponentCount = 1,
+    .ComponentCount = 2,
     .ComponentDescriptions =
         (Plugin::PluginComponent::ComponentDescriptor[]){
             {
                 .Name = "wasi:cli/environment@0.2.0",
                 .Description = "",
                 .Create = createEnvironment,
+            },
+            {
+                .Name = "wasi:cli/exit@0.2.0",
+                .Description = "",
+                .Create = createExit,
             },
         },
     .AddOptions = nullptr,

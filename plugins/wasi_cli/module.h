@@ -20,5 +20,15 @@ private:
   WasiCliEnvironment Env;
 };
 
+class WasiCliExitModule : public Runtime::Instance::ComponentInstance {
+public:
+  WasiCliExitModule();
+
+  WasiCliEnvironment &getEnv() { return Env; }
+
+private:
+  WasiCliEnvironment Env;
+};
+
 } // namespace Host
 } // namespace WasmEdge
