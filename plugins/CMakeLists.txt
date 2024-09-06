@@ -30,6 +30,11 @@ if(WASMEDGE_PLUGIN_WASI_POLL)
   add_subdirectory(wasi_poll)
 endif()
 
+# WASI plug-in: WASI-Cli proposal.
+if(WASMEDGE_PLUGIN_WASI_CLI)
+  add_subdirectory(wasi_cli)
+endif()
+
 # WasmEdge plug-in: wasm-bpf.
 if(WASMEDGE_PLUGIN_WASM_BPF)
   # Only Linux systems support wasm_bpf now.
