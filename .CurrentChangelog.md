@@ -1,4 +1,4 @@
-### 0.14.1-rc.4 (2024-09-02)
+### 0.14.1 (2024-09-09)
 
 Features:
 
@@ -12,7 +12,6 @@ Features:
   * Static link `libggml` and `libllama`.
   * Refined the CMake to support multiple backends of WASI-NN with ggml backend.
   * Supported compute single in RPC mode.
-* [WASI-NN] Added support for neural speed backend.
 * [WASI-NN] Added support for whisper.cpp backend.
 * [WASI-NN] Added support for piper backend.
 * [WASI-NN] Added support for ChatTTS backend.
